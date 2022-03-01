@@ -13,13 +13,13 @@ job_times = []
 job_contracts = []
 
 next_page = True
-page = 1
+page_num = 1
 
 while next_page:
 
-    url = f'https://www.pracuj.pl/praca/gdansk;wp?rd=10&pn={page}'
+    url = f'https://www.pracuj.pl/praca/gdansk;wp?rd=10&pn={page_num}'
 
-    print(f'Scraping page no.{page} - {url}\n')
+    print(f'Scraping page no.{page_num} - {url}\n')
 
     browser = start_chrome(url, headless=True)
 
@@ -70,7 +70,7 @@ while next_page:
             job_contract = ''
 
         # add keywords to search for specific phrases in job titles
-        keywords = ['python', 'data', 'science', 'scientist', 'junior']
+        keywords = ['python', 'data', 'science', 'scientist', 'developer', 'dev', 'programista']
         keywords.extend([keyword.capitalize() for keyword in keywords] + [keyword.upper() for keyword in keywords])
 
         if any(keyword in job_title for keyword in keywords):
@@ -84,9 +84,6 @@ while next_page:
             job_times.append(job_time)
             job_contracts.append(job_contract)
 
-        else:
-            pass
-
         print([job_company, job_title, job_location, job_level, job_contract, job_type, job_time, job_link])
 
         try:
@@ -95,8 +92,8 @@ while next_page:
         except (AttributeError, TypeError):
             next_page = False
 
-    print(f'Page no.{page} scraped\n')
-    page += 1
+    print(f'Page no.{page_num} scraped\n')
+    page_num += 1
 
     continue
 
